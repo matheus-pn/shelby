@@ -39,12 +39,15 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    '@nuxtjs/auth',
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios'
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  axios: {
+    baseURL: 'http://localhost:8081'
+  },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
@@ -53,7 +56,7 @@ export default {
       dark: true,
       themes: {
         dark: {
-          primary: colors.blue.darken2,
+          primary: colors.grey.lighten2,
           accent: colors.grey.darken3,
           secondary: colors.amber.darken3,
           info: colors.teal.lighten1,
@@ -65,6 +68,39 @@ export default {
     }
   },
 
+  /*
+  /*
+  ** Auth module configuration
+  ** See https://auth.nuxtjs.org/guide/setup.html
+  */
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: {
+            url: 'api/v1/users/login',
+            method: 'post',
+            propertyName: 'generate_jwt'
+          },
+          user: {
+            url: 'api/v1/printing_room/users/info',
+            method: 'get',
+            propertyName: false
+          },
+          logout: false
+        }
+      }
+    }
+  },
+  router: {
+    middleware: ['auth']
+  },
+  vue: {
+    config: {
+      productionTip: false,
+      devtools: true
+    }
+  },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
   }

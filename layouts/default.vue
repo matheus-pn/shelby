@@ -8,8 +8,9 @@
       app
     >
       <v-list>
+        <!-- UNGROUPED MENU -->
         <v-list-item
-          v-for="(item, i) in items"
+          v-for="(item, i) in menu.ungrouped"
           :key="i"
           :to="item.to"
           router
@@ -22,6 +23,34 @@
             <v-list-item-title v-text="item.title" />
           </v-list-item-content>
         </v-list-item>
+        <!-- GROUPED MENU -->
+        <v-list-group
+          v-for="item in menu.grouped"
+          :key="item.title"
+          :prepend-icon="item.action"
+          :value="inNamespace(item.namespace)"
+        >
+          <template #activator>
+            <v-list-item-content>
+              <v-list-item-title v-text="item.title" />
+            </v-list-item-content>
+          </template>
+
+          <v-list-item
+            v-for="child in item.items"
+            :key="child.title"
+            :to="child.to"
+            router
+            exact
+          >
+            <v-list-item-action>
+              <v-icon>{{ child.icon }}</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title v-text="child.title" />
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-group>
       </v-list>
     </v-navigation-drawer>
     <v-app-bar
@@ -38,35 +67,60 @@
       </v-btn>
       <v-toolbar-title v-text="title" />
       <v-spacer />
-      <v-btn
-        icon
-        @click.stop="rightDrawer = !rightDrawer"
-      >
-        <v-icon>mdi-menu</v-icon>
-      </v-btn>
+      <v-menu offset-y>
+        <template #activator="{ on, attrs }">
+          <v-avatar
+            color="accent"
+            size="56"
+            v-bind="attrs"
+            v-on="on"
+          >
+            <span class="white--text headline">{{ userInitials() }}</span>
+          </v-avatar>
+        </template>
+        <v-list>
+          <v-list-item
+            to="/logout"
+            router
+            exact
+          >
+            <v-list-item-action>
+              <v-icon>mdi-logout</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title v-text="'Logout'" />
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </v-menu>
     </v-app-bar>
     <v-main>
       <v-container>
+        <v-alert
+          :value="!!$store.state.notice"
+          border="left"
+          dismissible
+          type="info"
+        >
+          <template #close>
+            <v-icon @click="dismissNotice()">mdi-close</v-icon>
+          </template>
+          {{ $store.state.notice }}
+        </v-alert>
+        <v-alert
+          :value="!!$store.state.error"
+          border="left"
+          dismissible
+          type="error"
+        >
+          <template #close>
+            <v-icon @click="dismissError()">mdi-close</v-icon>
+          </template>
+          {{ $store.state.error }}
+        </v-alert>
         <nuxt />
       </v-container>
     </v-main>
-    <v-navigation-drawer
-      v-model="rightDrawer"
-      :right="right"
-      temporary
-      fixed
-    >
-      <v-list>
-        <v-list-item @click.native="right = !right">
-          <v-list-item-action>
-            <v-icon light>
-              mdi-repeat
-            </v-icon>
-          </v-list-item-action>
-          <v-list-item-title>Switch drawer (click me)</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
     <v-footer
       absolute
       app
@@ -79,25 +133,57 @@
 <script lang="ts">
 import Vue from 'vue'
 
-export default Vue.extend({
-  data () {
-    return {
+const menu = {
+  ungrouped: [
+    {
+      icon: 'mdi-apps',
+      title: 'Welcome',
+      to: '/'
+    }
+  ],
+
+  grouped: [
+    {
+      title: 'Technical List',
+      namespace: 'technical-list',
       items: [
         {
-          icon: 'mdi-apps',
-          title: 'Welcome',
-          to: '/'
-        },
-        {
-          icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire'
+          icon: 'mdi-check-box-multiple-outline',
+          title: 'Material Rules',
+          to: '/technical-list/material-rules/all'
         }
-      ],
-      miniVariant: false,
-      right: false,
-      rightDrawer: false,
-      title: 'Shelby'
+      ]
+    }
+  ]
+}
+
+const defaultData = {
+  drawer: false,
+  fixed: false,
+  menu,
+  miniVariant: false,
+  right: false,
+  rightDrawer: false,
+  title: 'Shelby.'
+}
+
+export default Vue.extend({
+  data: () => (defaultData),
+
+  methods: {
+    userInitials (): string {
+      const name = (this.$auth.user?.name ?? '') as string
+      return name.split(/\s+/).map(n => n.charAt(0).toUpperCase()).join('')
+    },
+    inNamespace (namespace: string): boolean {
+      const path = this.$nuxt.$route.path
+      return path.split('/').some(n => n.match(namespace))
+    },
+    dismissNotice () {
+      this.$store.commit('unsetNotice')
+    },
+    dismissError () {
+      this.$store.commit('unsetError')
     }
   }
 })
