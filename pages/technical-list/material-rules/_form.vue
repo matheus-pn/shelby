@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <v-card-title>Formulário de Regra</v-card-title>
+    <v-card-title>{{ $t('technicalList.materialRules.form') }}</v-card-title>
     <v-form>
       <v-container>
         <v-expansion-panels
@@ -10,118 +10,55 @@
           <!-- Companies -->
           <v-expansion-panel>
             <v-expansion-panel-header>
-              Filtro de Company
+              {{ $t('technicalList.materialRules.companyFilter') }}
               <v-subheader>
-                {{ form.toRule().explain('company_inclusion', 'companies') }}
+                {{ form.toRule().explain(0, this) }}
               </v-subheader>
             </v-expansion-panel-header>
             <v-expansion-panel-content>
-              <v-row single-line>
-                <v-col md="2">
-                  <v-select
-                    v-model="form.companyInclusionVmodel"
-                    :items="flagOptions"
-                    label="Opções de filtro"
-                  />
-                </v-col>
-                <v-col>
-                  <v-autocomplete
-                    v-model="form.companyVmodel"
-                    :loading="form.companyLoading"
-                    :items="Array.from(form.companyOptions)"
-                    prepend-icon="mdi-city"
-                    item-text="name"
-                    item-value="id"
-                    multiple
-                    chips
-                    small-chips
-                    deletable-chips
-                    clearable
-                    hide-selected
-                    label="Companies"
-                  />
-                </v-col>
-              </v-row>
+              <rule-filter
+                v-model="form"
+                :rule-field="'company'"
+                :flag-options="flagOptions"
+              />
             </v-expansion-panel-content>
           </v-expansion-panel>
           <!-- Materials -->
           <v-expansion-panel>
             <v-expansion-panel-header>
-              Filtro de Material
+              {{ $t('technicalList.materialRules.materialFilter') }}
               <v-subheader>
-                {{ form.toRule().explain('material_inclusion', 'materials') }}
+                {{ form.toRule().explain(2, this) }}
               </v-subheader>
             </v-expansion-panel-header>
             <v-expansion-panel-content>
-              <v-row single-line>
-                <v-col md="2">
-                  <v-select
-                    v-model="form.materialInclusionVmodel"
-                    :items="flagOptions"
-                    label="Opções de filtro"
-                  />
-                </v-col>
-                <v-col>
-                  <v-autocomplete
-                    v-model="form.materialVmodel"
-                    :loading="form.materialLoading"
-                    :items="Array.from(form.materialOptions)"
-                    prepend-icon="mdi-briefcase"
-                    item-text="name"
-                    item-value="id"
-                    multiple
-                    chips
-                    small-chips
-                    deletable-chips
-                    clearable
-                    hide-selected
-                    label="Materiais"
-                  />
-                </v-col>
-              </v-row>
+              <rule-filter
+                v-model="form"
+                :rule-field="'material'"
+                :flag-options="flagOptions"
+              />
             </v-expansion-panel-content>
           </v-expansion-panel>
           <!-- Categories -->
           <v-expansion-panel>
             <v-expansion-panel-header>
-              Filtro de Categoria
+              {{ $t('technicalList.materialRules.categoryFilter') }}
               <v-subheader>
-                {{ form.toRule().explain('category_inclusion', 'categories') }}
+                {{ form.toRule().explain(1, this) }}
               </v-subheader>
             </v-expansion-panel-header>
             <v-expansion-panel-content>
-              <v-row single-line>
-                <v-col md="2">
-                  <v-select
-                    v-model="form.categoryInclusionVmodel"
-                    :items="flagOptions"
-                    label="Opções de filtro"
-                  />
-                </v-col>
-                <v-col>
-                  <v-autocomplete
-                    v-model="form.categoryVmodel"
-                    :loading="form.categoryLoading"
-                    :items="Array.from(form.categoryOptions)"
-                    prepend-icon="mdi-buffer"
-                    item-text="name"
-                    item-value="id"
-                    chips
-                    small-chips
-                    deletable-chips
-                    multiple
-                    clearable
-                    hide-selected
-                    label="Categorias"
-                  />
-                </v-col>
-              </v-row>
+              <rule-filter
+                v-model="form"
+                :rule-field="'category'"
+                :flag-options="flagOptions"
+              />
             </v-expansion-panel-content>
           </v-expansion-panel>
         </v-expansion-panels>
         <v-row>
           <v-col>
-            <v-card-title>Consumiveis</v-card-title>
+            <v-card-title>{{ $t('consumables') }}</v-card-title>
           </v-col>
         </v-row>
         <v-row>
@@ -145,7 +82,7 @@
               color="info"
               @click="submit() "
             >
-              Submit
+              {{ $t('technicalList.materialRules.submit') }}
             </v-btn>
           </v-col>
         </v-row>
@@ -157,8 +94,13 @@
 <script lang="ts">
 import Vue from 'vue'
 import { MaterialRuleForm, flagOptions, FormModes } from '@/services/technical-list/material_rule_form'
+import RuleFilter from '@/components/material_rule/RuleFilter.vue'
 
 export default Vue.extend({
+  components: {
+    RuleFilter
+  },
+
   data: () => ({
     form: new MaterialRuleForm(),
     flagOptions

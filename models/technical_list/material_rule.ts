@@ -1,5 +1,7 @@
 import axios from 'axios'
 import config from '@/nuxt.config'
+import Vue from 'vue'
+import { Translatable } from '@/services/translatable'
 import BaseModel from '../base_model'
 
 const $axios = axios.create(config.axios)
@@ -17,7 +19,7 @@ export class MaterialRule extends BaseModel {
       rule: {
         company_ids: this.get('company_ids', []),
         material_ids: this.get('material_ids', []),
-        category_ids: this.get('material_ids', []),
+        category_ids: this.get('category_ids', []),
         company_inclusion: this.get('company_inclusion', false),
         material_inclusion: this.get('material_inclusion', false),
         category_inclusion: this.get('category_inclusion', false)
@@ -31,7 +33,12 @@ export class MaterialRule extends BaseModel {
       await $axios.post('/api/v1/shelby/material_rules', this.toParams())
       return true
     } catch (error) {
-      this.setErr(error.response.data.error)
+      if (error.response?.data?.error) {
+        this.setErr(error.response.data.error)
+      } else {
+        this.set('error', error.message)
+      }
+
       return false
     }
   }
@@ -41,7 +48,12 @@ export class MaterialRule extends BaseModel {
       await $axios.patch(`/api/v1/shelby/material_rules/${this.id}`, this.toParams())
       return true
     } catch (error) {
-      this.setErr(error.response.data.error)
+      if (error.response?.data?.error) {
+        this.setErr(error.response.data.error)
+      } else {
+        this.set('error', error.message)
+      }
+
       return false
     }
   }
@@ -60,21 +72,37 @@ export class MaterialRule extends BaseModel {
     return new Date(this.get('created_at'))
   }
 
+  private fields = {
+    0: { flag: 'company_inclusion', name: 'companies' },
+    1: { flag: 'category_inclusion', name: 'categories' },
+    2: { flag: 'material_inclusion', name: 'materials' }
+  }
+
   public explain
-  (flagName: string, plural: string): string {
-    const filter = this.collection(plural).map(e => e.name)
-    const flag = Boolean(this.get(flagName))
-    const except = 'Se aplica a todos exceto: '
-    const only = 'Se aplica somente a: '
-    const first = filter[0]
+  (field: 0 | 1 | 2, vm: Vue): string {
+    const filter = this.collection(this.fields[field].name).map(e => e.name)
+    const flag = Boolean(this.get(this.fields[field].flag))
+    const except = new Translatable('technicalList.materialRules.except')
+    const only = new Translatable('technicalList.materialRules.only')
+    const first = new Translatable(filter[0], false)
+    const commaSep = new Translatable(filter.join(', '), false)
+    const notAppliable = new Translatable('technicalList.materialRules.notAppliable')
+    const forAll = new Translatable('technicalList.materialRules.forAll')
+
+    let res
 
     switch (filter.length) {
       case 0:
-        return flag ? 'Não se aplica à nenhum' : 'Se aplica a todos'
+        res = flag ? [notAppliable] : [forAll]
+        break
       case 1:
-        return flag ? first : except + first
+        res = flag ? [first] : [except, first]
+        break
       default:
-        return flag ? only + filter.join(', ') : except + filter.join(', ')
+        res = flag ? [only, commaSep] : [except, commaSep]
+        break
     }
+
+    return res.map(t => t.translate ? vm.$t(t.text) : t.text).join(' ')
   }
 }

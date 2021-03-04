@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-card-title>
-      Regras de Material
+      {{ $t('technicalList.materialRules.title') }}
       <v-spacer />
       <v-text-field
         v-model="search"
@@ -19,14 +19,14 @@
         dark
         outlined
       >
-        New Rule
+        {{ $t('technicalList.materialRules.new') }}
         <v-icon dark dense>
           mdi-plus
         </v-icon>
       </v-btn>
     </v-card-title>
     <v-data-table
-      :headers="headers"
+      :headers="headers.map(h => ({ text: $t(h.text), value: h.value }))"
       :items="items"
       :loading="items === undefined"
       class="elevation-1"
@@ -69,12 +69,12 @@ import Vue from 'vue'
 import { MaterialRule } from '@/models/technical_list/material_rule'
 
 const headers = [
-  { text: 'Number', value: 'id' },
-  { text: 'Materials', value: 'materials' },
-  { text: 'Categories', value: 'categories' },
-  { text: 'Companies', value: 'companies' },
-  { text: 'Registro', value: 'created_at' },
-  { text: 'Actions', value: 'actions', sortable: false }
+  { text: 'technicalList.materialRules.id', value: 'id' },
+  { text: 'technicalList.materialRules.materialFilter', value: 'materials' },
+  { text: 'technicalList.materialRules.categoryFilter', value: 'categories' },
+  { text: 'technicalList.materialRules.companyFilter', value: 'companies' },
+  { text: 'technicalList.materialRules.createdAt', value: 'created_at' },
+  { text: 'technicalList.materialRules.actions', value: 'actions', sortable: false }
 ]
 
 const params = { page: 1, per: 25 }
@@ -118,7 +118,7 @@ export default Vue.extend({
       params.set('page', '1')
       params.set('per', '10000')
       return this.$axios
-        .get(`http://localhost:8081/api/v1/shelby/material_rules?${params.toString()}`)
+        .get(`/api/v1/shelby/material_rules?${params.toString()}`)
         .then(r => r.data.map((e: any) => {
           return new MaterialRule(e.rule)
         }))
@@ -128,9 +128,9 @@ export default Vue.extend({
       this.items = rules.map((rule) => {
         return {
           id: rule.id,
-          materials: rule.explain('material_inclusion', 'materials'),
-          companies: rule.explain('company_inclusion', 'companies'),
-          categories: rule.explain('category_inclusion', 'categories'),
+          materials: rule.explain(2, this),
+          companies: rule.explain(0, this),
+          categories: rule.explain(1, this),
           created_at: rule.createdAt.toLocaleString('pt-Br').slice(0, 10)
         }
       })

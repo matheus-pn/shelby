@@ -20,7 +20,7 @@
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title v-text="item.title" />
+            <v-list-item-title v-text="$t(item.title)" />
           </v-list-item-content>
         </v-list-item>
         <!-- GROUPED MENU -->
@@ -32,7 +32,7 @@
         >
           <template #activator>
             <v-list-item-content>
-              <v-list-item-title v-text="item.title" />
+              <v-list-item-title v-text="$t(item.title)" />
             </v-list-item-content>
           </template>
 
@@ -47,7 +47,7 @@
               <v-icon>{{ child.icon }}</v-icon>
             </v-list-item-action>
             <v-list-item-content>
-              <v-list-item-title v-text="child.title" />
+              <v-list-item-title v-text="$t(child.title)" />
             </v-list-item-content>
           </v-list-item>
         </v-list-group>
@@ -88,7 +88,7 @@
               <v-icon>mdi-logout</v-icon>
             </v-list-item-action>
             <v-list-item-content>
-              <v-list-item-title v-text="'Logout'" />
+              <v-list-item-title v-text="$t('logout')" />
             </v-list-item-content>
           </v-list-item>
         </v-list>
@@ -137,19 +137,19 @@ const menu = {
   ungrouped: [
     {
       icon: 'mdi-apps',
-      title: 'Welcome',
+      title: 'welcome',
       to: '/'
     }
   ],
 
   grouped: [
     {
-      title: 'Technical List',
+      title: 'technicalList.title',
       namespace: 'technical-list',
       items: [
         {
           icon: 'mdi-check-box-multiple-outline',
-          title: 'Material Rules',
+          title: 'technicalList.materialRules.title',
           to: '/technical-list/material-rules/all'
         }
       ]

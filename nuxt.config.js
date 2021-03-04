@@ -41,12 +41,42 @@ export default {
   modules: [
     '@nuxtjs/auth',
     // https://go.nuxtjs.dev/axios
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    ['nuxt-i18n',
+      {
+        lazy: true,
+        detectBrowserLanguage: {
+          useCookie: true,
+          cookieKey: 'i18n-redirected',
+          alwaysRedirect: true,
+          fallbackLocale: 'en'
+        },
+        locales: [
+          {
+            name: 'Português',
+            code: 'pt',
+            iso: 'pt-BR',
+            file: 'pt-BR.js'
+          },
+          {
+            name: 'English',
+            code: 'en',
+            iso: 'en-US',
+            file: 'en-US.js'
+          }
+        ],
+        langDir: 'i18n/',
+        defaultLocale: 'pt',
+        strategy: 'no_prefix',
+        parsePages: false
+      }
+    ]
+
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: 'http://localhost:8081'
+    baseURL: 'https://factory.gocase.com.br'
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify

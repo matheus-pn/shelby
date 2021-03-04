@@ -25,7 +25,7 @@
           color="info"
           @click="submit"
         >
-          Login
+          {{ $t('login') }}
         </v-btn>
       </v-container>
     </v-form>
