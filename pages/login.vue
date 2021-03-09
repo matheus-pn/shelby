@@ -88,12 +88,7 @@ export default Vue.extend({
 
 <style>
 .center {
-  margin: 0;
-  position: fixed;
-  width: 20%;
-  top: 40%;
-  left: 50%;
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
+  margin: 250px;
+  width: 33%;
 }
 </style>
