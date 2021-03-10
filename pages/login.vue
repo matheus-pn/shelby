@@ -88,7 +88,8 @@ export default Vue.extend({
 
 <style>
 .center {
-  margin: 250px;
+  margin: 20% 10% auto auto;
   width: 33%;
+  min-width: 40vh;
 }
 </style>
