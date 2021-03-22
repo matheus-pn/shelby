@@ -3,8 +3,7 @@ import colors from 'vuetify/es5/util/colors'
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s',
-    title: 'Shelby',
+    titleTemplate: 'Shelby - %s',
     htmlAttrs: {
       lang: 'en'
     },
@@ -76,7 +75,7 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: 'https://factory.gocase.com.br'
+    baseURL: 'http://localhost:8080'
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify

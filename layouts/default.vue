@@ -65,7 +65,7 @@
       >
         <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
       </v-btn>
-      <v-toolbar-title v-text="title" />
+      <v-toolbar-title v-text="`${title} | ${userFactory()}`" />
       <v-spacer />
       <v-menu offset-y>
         <template #activator="{ on, attrs }">
@@ -164,11 +164,27 @@ const defaultData = {
   miniVariant: false,
   right: false,
   rightDrawer: false,
-  title: 'Shelby.'
+  title: 'Shelby'
+}
+
+const idToFactory = (id: number): string => {
+  switch (id) {
+    case 1: return 'Fortaleza (BR)'
+    case 2: return 'Amsterdam (NL)'
+    case 3: return 'Iguatemi (BR)'
+    case 4: return 'Extrema (BR)'
+    default: return 'Fábrica desconhecida, usando Extrema (BR)'
+  }
 }
 
 export default Vue.extend({
   data: () => (defaultData),
+
+  head () {
+    return {
+      title: idToFactory((this.$auth.user?.factory_id ?? 4) as number)
+    }
+  },
 
   methods: {
     userInitials (): string {
@@ -184,6 +200,10 @@ export default Vue.extend({
     },
     dismissError () {
       this.$store.commit('unsetError')
+    },
+    userFactory (): string {
+      const id = (this.$auth.user?.factory_id ?? 4) as number
+      return idToFactory(id)
     }
   }
 })

@@ -66,10 +66,13 @@ export class MaterialRuleForm {
     this.addToSet(this.consumableOptions, filteredCons)
   }
 
-  loadOptions () {
-    const materialsRes = $axios.get('/api/v1/shelby/materials')
+  loadOptions (factoryId: number) {
+    const params = new URLSearchParams()
+    params.set('factory_id', String(factoryId))
+
+    const materialsRes = $axios.get(`/api/v1/shelby/materials?${params}`)
+    const companiesRes = $axios.get(`/api/v1/shelby/companies?${params}`)
     const categoriesRes = $axios.get('/api/v1/shelby/categories')
-    const companiesRes = $axios.get('/api/v1/shelby/companies')
     const consumablesRes = $axios.get('/api/v1/shelby/consumables')
 
     materialsRes

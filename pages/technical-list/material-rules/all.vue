@@ -117,8 +117,9 @@ export default Vue.extend({
       const params = new URLSearchParams()
       params.set('page', '1')
       params.set('per', '10000')
+      params.set('factory_id', String(this.$auth.user?.factory_id ?? 4))
       return this.$axios
-        .get(`/api/v1/shelby/material_rules?${params.toString()}`)
+        .get(`/api/v1/shelby/material_rules?${params}`)
         .then(r => r.data.map((e: any) => {
           return new MaterialRule(e.rule)
         }))
@@ -126,11 +127,13 @@ export default Vue.extend({
 
     setItems (rules: MaterialRule[]): void {
       this.items = rules.map((rule) => {
+        let s
+        const limit = 70
         return {
           id: rule.id,
-          materials: rule.explain(2, this),
-          companies: rule.explain(0, this),
-          categories: rule.explain(1, this),
+          materials: (s = rule.explain(2, this)).length > limit ? s.slice(0, limit) + '...' : s,
+          companies: (s = rule.explain(0, this)).length > limit ? s.slice(0, limit) + '...' : s,
+          categories: (s = rule.explain(1, this)).length > limit ? s.slice(0, limit) + '...' : s,
           created_at: rule.createdAt.toLocaleString('pt-Br').slice(0, 10)
         }
       })

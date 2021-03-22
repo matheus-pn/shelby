@@ -108,7 +108,7 @@ export default Vue.extend({
 
   beforeMount () {
     const formParam = this.$route.params.form
-    this.form.loadOptions()
+    this.form.loadOptions((this.$auth.user?.factory_id ?? 4) as number)
     switch (true) {
       case /new/.test(formParam):
         break

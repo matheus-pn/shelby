@@ -12,7 +12,7 @@
       <v-autocomplete
         v-model="/* eslint-disable vue/no-mutating-props */ value[`${ruleField}Vmodel`]"
         :loading="value[`${ruleField}Loading`]"
-        :items="Array.from(value[`${ruleField}Options`])"
+        :items="Array.from(value[`${ruleField}Options`]).sort((v1, v2) => (v1.name.localeCompare(v2.name)))"
         :disabled="value[`${ruleField}InclusionVmodel`] === null"
         prepend-icon="mdi-city"
         item-text="name"
