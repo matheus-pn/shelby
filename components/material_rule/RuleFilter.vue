@@ -4,7 +4,7 @@
     <v-col md="2">
       <v-select
         v-model="/* eslint-disable vue/no-mutating-props */ value[`${ruleField}InclusionVmodel`]"
-        :items="flagOptions"
+        :items="translatedFlagOptions()"
         label="Opções de filtro"
       />
     </v-col>
@@ -50,6 +50,14 @@ export default Vue.extend({
   watch: {
     form () {
       this.$emit('input', this.value)
+    }
+  },
+
+  methods: {
+    translatedFlagOptions () {
+      return this.flagOptions.map((o: any) => {
+        return { value: o.value, text: this.$t(o.text) }
+      })
     }
   }
 })

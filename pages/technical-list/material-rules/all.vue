@@ -30,8 +30,7 @@
       :items="items"
       :loading="items === undefined"
       class="elevation-1"
-      :page.sync="params.page"
-      :items-per-page.sync="params.per"
+      page.sync="params.page"
       :search="search"
     >
       <template #item.actions="{ item }">
@@ -70,6 +69,7 @@ import { MaterialRule } from '@/models/technical_list/material_rule'
 
 const headers = [
   { text: 'technicalList.materialRules.id', value: 'id' },
+  { text: 'name', value: 'name' },
   { text: 'technicalList.materialRules.materialFilter', value: 'materials' },
   { text: 'technicalList.materialRules.categoryFilter', value: 'categories' },
   { text: 'technicalList.materialRules.companyFilter', value: 'companies' },
@@ -131,6 +131,7 @@ export default Vue.extend({
         const limit = 70
         return {
           id: rule.id,
+          name: rule.get('name'),
           materials: (s = rule.explain(2, this)).length > limit ? s.slice(0, limit) + '...' : s,
           companies: (s = rule.explain(0, this)).length > limit ? s.slice(0, limit) + '...' : s,
           categories: (s = rule.explain(1, this)).length > limit ? s.slice(0, limit) + '...' : s,

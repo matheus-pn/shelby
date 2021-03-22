@@ -10,8 +10,8 @@ const $axios = axios.create(config.axios)
 
 export const flagOptions = [
   { value: null, text: '-' },
-  { value: true, text: 'Only' },
-  { value: false, text: 'Except' }
+  { value: true, text: 'only' },
+  { value: false, text: 'except' }
 ]
 
 interface Option { id: number, name: string }
@@ -42,6 +42,9 @@ export class MaterialRuleForm {
   public materialInclusionVmodel = null
   public categoryInclusionVmodel = null
 
+  public ruleNameVmodel = ''
+  public factoryId = null as number | null
+
   async loadFrom (id: string) {
     this.id = Number(id)
     this.mode = FormModes.EDIT
@@ -55,6 +58,7 @@ export class MaterialRuleForm {
     const filteredMat = this.filterNull(res.data.materials)
     const filteredCat = this.filterNull(res.data.categories)
 
+    this.ruleNameVmodel = res.data.name
     this.companyVmodel = filteredComp.map(e => e.id)
     this.materialVmodel = filteredMat.map(e => e.id)
     this.categoryVmodel = filteredCat.map(e => e.id)
@@ -66,9 +70,9 @@ export class MaterialRuleForm {
     this.addToSet(this.consumableOptions, filteredCons)
   }
 
-  loadOptions (factoryId: number) {
+  loadOptions () {
     const params = new URLSearchParams()
-    params.set('factory_id', String(factoryId))
+    params.set('factory_id', String(this.factoryId))
 
     const materialsRes = $axios.get(`/api/v1/shelby/materials?${params}`)
     const companiesRes = $axios.get(`/api/v1/shelby/companies?${params}`)
@@ -103,6 +107,8 @@ export class MaterialRuleForm {
   toRule (): MaterialRule {
     this.rule.initialize({
       id: this.id,
+      factory_id: this.factoryId,
+      name: this.ruleNameVmodel,
       companies: this.selectedCompanies(),
       materials: this.selectedMaterials(),
       categories: this.selectedCategories(),

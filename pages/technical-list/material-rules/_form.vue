@@ -3,6 +3,7 @@
     <v-card-title>{{ $t('technicalList.materialRules.form') }}</v-card-title>
     <v-form>
       <v-container>
+        <v-text-field v-model="form.ruleNameVmodel" :label="$t('name')" />
         <v-expansion-panels
           dense
           multiple
@@ -108,7 +109,8 @@ export default Vue.extend({
 
   beforeMount () {
     const formParam = this.$route.params.form
-    this.form.loadOptions((this.$auth.user?.factory_id ?? 4) as number)
+    this.form.factoryId = (this.$auth.user?.factory_id ?? 4) as number
+    this.form.loadOptions()
     switch (true) {
       case /new/.test(formParam):
         break
