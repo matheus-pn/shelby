@@ -4,7 +4,7 @@
     <v-col md="2">
       <v-select
         v-model="/* eslint-disable vue/no-mutating-props */ value[`${ruleField}InclusionVmodel`]"
-        :items="flagOptions"
+        :items="translatedFlagOptions()"
         label="Opções de filtro"
       />
     </v-col>
@@ -12,7 +12,7 @@
       <v-autocomplete
         v-model="/* eslint-disable vue/no-mutating-props */ value[`${ruleField}Vmodel`]"
         :loading="value[`${ruleField}Loading`]"
-        :items="Array.from(value[`${ruleField}Options`])"
+        :items="Array.from(value[`${ruleField}Options`]).sort((v1, v2) => (v1.name.localeCompare(v2.name)))"
         :disabled="value[`${ruleField}InclusionVmodel`] === null"
         prepend-icon="mdi-city"
         item-text="name"
@@ -50,6 +50,14 @@ export default Vue.extend({
   watch: {
     form () {
       this.$emit('input', this.value)
+    }
+  },
+
+  methods: {
+    translatedFlagOptions () {
+      return this.flagOptions.map((o: any) => {
+        return { value: o.value, text: this.$t(o.text) }
+      })
     }
   }
 })

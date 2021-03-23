@@ -17,6 +17,8 @@ export class MaterialRule extends BaseModel {
   private toParams () {
     return {
       rule: {
+        name: this.get('name'),
+        factory_id: this.get('factory_id'),
         company_ids: this.get('company_ids', []),
         material_ids: this.get('material_ids', []),
         category_ids: this.get('category_ids', []),
