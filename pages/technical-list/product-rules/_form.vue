@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <v-card-title>{{ $t('technicalList.form') }}</v-card-title>
+    <v-card-title>{{ $t('technicalList.materialRules.form') }}</v-card-title>
     <v-form>
       <v-container>
         <v-text-field v-model="form.ruleNameVmodel" :label="$t('name')" />
@@ -83,7 +83,7 @@
               color="info"
               @click="submit() "
             >
-              {{ $t('technicalList.submit') }}
+              {{ $t('technicalList.materialRules.submit') }}
             </v-btn>
           </v-col>
         </v-row>

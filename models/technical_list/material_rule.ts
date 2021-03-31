@@ -84,12 +84,12 @@ export class MaterialRule extends BaseModel {
   (field: 0 | 1 | 2, vm: Vue): string {
     const filter = this.collection(this.fields[field].name).map(e => e.name)
     const flag = Boolean(this.get(this.fields[field].flag))
-    const except = new Translatable('technicalList.materialRules.except')
-    const only = new Translatable('technicalList.materialRules.only')
+    const except = new Translatable('technicalList.except')
+    const only = new Translatable('technicalList.only')
     const first = new Translatable(filter[0], false)
     const commaSep = new Translatable(filter.join(', '), false)
-    const notAppliable = new Translatable('technicalList.materialRules.notAppliable')
-    const forAll = new Translatable('technicalList.materialRules.forAll')
+    const notAppliable = new Translatable('technicalList.notAppliable')
+    const forAll = new Translatable('technicalList.forAll')
 
     let res
 

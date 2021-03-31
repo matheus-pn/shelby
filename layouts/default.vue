@@ -151,6 +151,11 @@ const menu = {
           icon: 'mdi-check-box-multiple-outline',
           title: 'technicalList.materialRules.title',
           to: '/technical-list/material-rules/all'
+        },
+        {
+          icon: 'mdi-check-box-multiple-outline',
+          title: 'technicalList.productRules.title',
+          to: '/technical-list/product-rules/all'
         }
       ]
     }
