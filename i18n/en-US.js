@@ -1,5 +1,5 @@
-import materialRules from '@/i18n/en-US/material-rules'
-import productRules from '@/i18n/en-US/product-rules'
+import materialRules from '@/i18n/en-US/material_rules'
+import productRules from '@/i18n/en-US/product_rules'
 
 export default {
   name: 'Name',
