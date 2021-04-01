@@ -19,7 +19,7 @@
         dark
         outlined
       >
-        {{ $t('technicalList.materialRules.new') }}
+        {{ $t('technicalList.new') }}
         <v-icon dark dense>
           mdi-plus
         </v-icon>
@@ -68,13 +68,13 @@ import Vue from 'vue'
 import { MaterialRule } from '@/models/technical_list/material_rule'
 
 const headers = [
-  { text: 'technicalList.materialRules.id', value: 'id' },
+  { text: 'technicalList.id', value: 'id' },
   { text: 'name', value: 'name' },
   { text: 'technicalList.materialRules.materialFilter', value: 'materials' },
   { text: 'technicalList.materialRules.categoryFilter', value: 'categories' },
   { text: 'technicalList.materialRules.companyFilter', value: 'companies' },
-  { text: 'technicalList.materialRules.createdAt', value: 'created_at' },
-  { text: 'technicalList.materialRules.actions', value: 'actions', sortable: false }
+  { text: 'technicalList.createdAt', value: 'created_at' },
+  { text: 'technicalList.actions', value: 'actions', sortable: false }
 ]
 
 const params = { page: 1, per: 25 }

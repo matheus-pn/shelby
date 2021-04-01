@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <v-card-title>{{ $t('technicalList.materialRules.form') }}</v-card-title>
+    <v-card-title>{{ $t('technicalList.productRules.form') }}</v-card-title>
     <v-form>
       <v-container>
         <v-text-field v-model="form.ruleNameVmodel" :label="$t('name')" />
@@ -11,7 +11,7 @@
           <!-- Companies -->
           <v-expansion-panel>
             <v-expansion-panel-header>
-              {{ $t('technicalList.materialRules.companyFilter') }}
+              {{ $t('technicalList.productRules.companyFilter') }}
               <v-subheader>
                 {{ form.toRule().explain(0, this) }}
               </v-subheader>
@@ -27,7 +27,7 @@
           <!-- Materials -->
           <v-expansion-panel>
             <v-expansion-panel-header>
-              {{ $t('technicalList.materialRules.materialFilter') }}
+              {{ $t('technicalList.productRules.materialFilter') }}
               <v-subheader>
                 {{ form.toRule().explain(2, this) }}
               </v-subheader>
@@ -43,7 +43,7 @@
           <!-- Categories -->
           <v-expansion-panel>
             <v-expansion-panel-header>
-              {{ $t('technicalList.materialRules.categoryFilter') }}
+              {{ $t('technicalList.productRules.categoryFilter') }}
               <v-subheader>
                 {{ form.toRule().explain(1, this) }}
               </v-subheader>
@@ -83,7 +83,7 @@
               color="info"
               @click="submit() "
             >
-              {{ $t('technicalList.materialRules.submit') }}
+              {{ $t('technicalList.submit') }}
             </v-btn>
           </v-col>
         </v-row>

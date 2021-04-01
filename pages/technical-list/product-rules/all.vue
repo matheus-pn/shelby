@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-card-title>
-      {{ $t('technicalList.materialRules.title') }}
+      {{ $t('technicalList.productRules.title') }}
       <v-spacer />
       <v-text-field
         v-model="search"
@@ -13,13 +13,13 @@
       <v-spacer />
       <v-btn
         color="primary"
-        to="/technical-list/material-rules/new"
+        to="/technical-list/product-rules/new"
         small
         rounded
         dark
         outlined
       >
-        {{ $t('technicalList.materialRules.new') }}
+        {{ $t('technicalList.new') }}
         <v-icon dark dense>
           mdi-plus
         </v-icon>
@@ -36,7 +36,7 @@
       <template #item.actions="{ item }">
         <v-row>
           <nuxt-link
-            :to="`/technical-list/material-rules/${item.id}`"
+            :to="`/technical-list/product-rules/${item.id}`"
             style="text-decoration: none;"
           >
             <v-icon
@@ -65,16 +65,16 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { MaterialRule } from '@/models/technical_list/material_rule'
+import { ProductRule } from '@/models/technical_list/product_rule'
 
 const headers = [
-  { text: 'technicalList.materialRules.id', value: 'id' },
+  { text: 'technicalList.id', value: 'id' },
   { text: 'name', value: 'name' },
-  { text: 'technicalList.materialRules.materialFilter', value: 'materials' },
-  { text: 'technicalList.materialRules.categoryFilter', value: 'categories' },
-  { text: 'technicalList.materialRules.companyFilter', value: 'companies' },
-  { text: 'technicalList.materialRules.createdAt', value: 'created_at' },
-  { text: 'technicalList.materialRules.actions', value: 'actions', sortable: false }
+  { text: 'technicalList.productRules.productFilter', value: 'products' },
+  { text: 'technicalList.productRules.taxonFilter', value: 'taxons' },
+  { text: 'technicalList.productRules.companyFilter', value: 'companies' },
+  { text: 'technicalList.createdAt', value: 'created_at' },
+  { text: 'technicalList.actions', value: 'actions', sortable: false }
 ]
 
 const params = { page: 1, per: 25 }
@@ -109,23 +109,23 @@ export default Vue.extend({
     deleteItem (item: any) {
       if (!confirm('Are you sure')) { return }
 
-      this.$axios.delete(`/api/v1/shelby/material_rules/${item.id}`)
+      this.$axios.delete(`/api/v1/shelby/product_rules/${item.id}`)
         .then(_ => (this.load()))
     },
 
-    fetchRules (): Promise<MaterialRule[]> {
+    fetchRules (): Promise<ProductRule[]> {
       const params = new URLSearchParams()
       params.set('page', '1')
       params.set('per', '10000')
       params.set('factory_id', String(this.$auth.user?.factory_id ?? 4))
       return this.$axios
-        .get(`/api/v1/shelby/material_rules?${params}`)
+        .get(`/api/v1/shelby/product_rules?${params}`)
         .then(r => r.data.map((e: any) => {
-          return new MaterialRule(e.rule)
+          return new ProductRule(e.rule)
         }))
     },
 
-    setItems (rules: MaterialRule[]): void {
+    setItems (rules: ProductRule[]): void {
       this.items = rules.map((rule) => {
         let s
         const limit = 70
