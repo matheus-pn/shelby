@@ -95,7 +95,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import { ProductRuleForm, flagOptions, FormModes } from '@/services/technical-list/product_rule_form'
-import RuleFilter from '@/components/product_rule/RuleFilter.vue'
+import RuleFilter from '@/components/RuleFilter.vue'
 
 export default Vue.extend({
   components: {

@@ -95,7 +95,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import { MaterialRuleForm, flagOptions, FormModes } from '@/services/technical-list/material_rule_form'
-import RuleFilter from '@/components/material_rule/RuleFilter.vue'
+import RuleFilter from '@/components/RuleFilter.vue'
 
 export default Vue.extend({
   components: {
