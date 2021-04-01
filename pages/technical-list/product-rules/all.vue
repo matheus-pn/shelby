@@ -132,9 +132,9 @@ export default Vue.extend({
         return {
           id: rule.id,
           name: rule.get('name'),
-          materials: (s = rule.explain(2, this)).length > limit ? s.slice(0, limit) + '...' : s,
+          products: (s = rule.explain(2, this)).length > limit ? s.slice(0, limit) + '...' : s,
           companies: (s = rule.explain(0, this)).length > limit ? s.slice(0, limit) + '...' : s,
-          categories: (s = rule.explain(1, this)).length > limit ? s.slice(0, limit) + '...' : s,
+          taxons: (s = rule.explain(1, this)).length > limit ? s.slice(0, limit) + '...' : s,
           created_at: rule.createdAt.toLocaleString('pt-Br').slice(0, 10)
         }
       })
