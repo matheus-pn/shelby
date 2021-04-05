@@ -1,4 +1,5 @@
 import materialRules from '@/i18n/pt-BR/material_rules'
+import productRules from '@/i18n/pt-BR/product_rules'
 
 export default {
   name: 'Nome',
@@ -10,6 +11,17 @@ export default {
   consumables: 'Consumíveis',
   technicalList: {
     title: 'Lista técnica',
-    materialRules
+    new: 'Nova Regra',
+    form: 'Formulário de Regra',
+    submit: 'Submeter',
+    forAll: 'Vale para a todas opções',
+    notAppliable: 'Não vale para nenhuma opção',
+    only: 'Vale somente para:',
+    except: 'Vale para todos exceto:',
+    id: 'Numero da regra',
+    createdAt: 'Created At',
+    actions: 'Actions',
+    materialRules,
+    productRules
   }
 }

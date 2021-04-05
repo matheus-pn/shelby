@@ -6,7 +6,7 @@ import BaseModel from '../base_model'
 
 const $axios = axios.create(config.axios)
 
-export class MaterialRule extends BaseModel {
+export class ProductRule extends BaseModel {
   public collection (name: string) {
     const arr = this.get(name, []) as Array<any>
     return arr
@@ -20,11 +20,11 @@ export class MaterialRule extends BaseModel {
         name: this.get('name'),
         factory_id: this.get('factory_id'),
         company_ids: this.get('company_ids', []),
-        material_ids: this.get('material_ids', []),
-        category_ids: this.get('category_ids', []),
+        product_ids: this.get('product_ids', []),
+        taxon_ids: this.get('taxon_ids', []),
         company_inclusion: this.get('company_inclusion', false),
-        material_inclusion: this.get('material_inclusion', false),
-        category_inclusion: this.get('category_inclusion', false)
+        product_inclusion: this.get('product_inclusion', false),
+        taxon_inclusion: this.get('taxon_inclusion', false)
       },
       consumable_ids: this.get('consumable_ids', [])
     }
@@ -32,7 +32,7 @@ export class MaterialRule extends BaseModel {
 
   public async create (): Promise<boolean> {
     try {
-      await $axios.post('/api/v1/shelby/material_rules', this.toParams())
+      await $axios.post('/api/v1/shelby/product_rules', this.toParams())
       return true
     } catch (error) {
       if (error.response?.data?.error) {
@@ -47,7 +47,7 @@ export class MaterialRule extends BaseModel {
 
   public async edit (): Promise<boolean> {
     try {
-      await $axios.patch(`/api/v1/shelby/material_rules/${this.id}`, this.toParams())
+      await $axios.patch(`/api/v1/shelby/product_rules/${this.id}`, this.toParams())
       return true
     } catch (error) {
       if (error.response?.data?.error) {
@@ -76,8 +76,8 @@ export class MaterialRule extends BaseModel {
 
   private fields = {
     0: { flag: 'company_inclusion', name: 'companies' },
-    1: { flag: 'category_inclusion', name: 'categories' },
-    2: { flag: 'material_inclusion', name: 'materials' }
+    1: { flag: 'taxon_inclusion', name: 'taxons' },
+    2: { flag: 'product_inclusion', name: 'products' }
   }
 
   public explain

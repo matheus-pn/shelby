@@ -148,9 +148,14 @@ const menu = {
       namespace: 'technical-list',
       items: [
         {
-          icon: 'mdi-check-box-multiple-outline',
+          icon: 'mdi-alpha-m-box',
           title: 'technicalList.materialRules.title',
           to: '/technical-list/material-rules/all'
+        },
+        {
+          icon: 'mdi-alpha-p-box',
+          title: 'technicalList.productRules.title',
+          to: '/technical-list/product-rules/all'
         }
       ]
     }

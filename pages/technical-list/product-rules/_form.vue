@@ -11,7 +11,7 @@
           <!-- Companies -->
           <v-expansion-panel>
             <v-expansion-panel-header>
-              {{ $t('technicalList.materialRules.companyFilter') }}
+              {{ $t('technicalList.productRules.companyFilter') }}
               <v-subheader>
                 {{ form.toRule().explain(0, this) }}
               </v-subheader>
@@ -27,7 +27,7 @@
           <!-- Materials -->
           <v-expansion-panel>
             <v-expansion-panel-header>
-              {{ $t('technicalList.materialRules.materialFilter') }}
+              {{ $t('technicalList.productRules.productFilter') }}
               <v-subheader>
                 {{ form.toRule().explain(2, this) }}
               </v-subheader>
@@ -35,7 +35,7 @@
             <v-expansion-panel-content>
               <rule-filter
                 v-model="form"
-                :rule-field="'material'"
+                :rule-field="'product'"
                 :flag-options="flagOptions"
               />
             </v-expansion-panel-content>
@@ -43,7 +43,7 @@
           <!-- Categories -->
           <v-expansion-panel>
             <v-expansion-panel-header>
-              {{ $t('technicalList.materialRules.categoryFilter') }}
+              {{ $t('technicalList.productRules.taxonFilter') }}
               <v-subheader>
                 {{ form.toRule().explain(1, this) }}
               </v-subheader>
@@ -51,7 +51,7 @@
             <v-expansion-panel-content>
               <rule-filter
                 v-model="form"
-                :rule-field="'category'"
+                :rule-field="'taxon'"
                 :flag-options="flagOptions"
               />
             </v-expansion-panel-content>
@@ -94,7 +94,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { MaterialRuleForm, flagOptions, FormModes } from '@/services/technical-list/material_rule_form'
+import { ProductRuleForm, flagOptions, FormModes } from '@/services/technical-list/product_rule_form'
 import RuleFilter from '@/components/RuleFilter.vue'
 
 export default Vue.extend({
@@ -103,7 +103,7 @@ export default Vue.extend({
   },
 
   data: () => ({
-    form: new MaterialRuleForm(),
+    form: new ProductRuleForm(),
     flagOptions
   }),
 
@@ -118,7 +118,7 @@ export default Vue.extend({
         this.form.loadFrom(formParam)
         break
       default:
-        this.$router.push('/technical-list/material-rules/all')
+        this.$router.push('/technical-list/product-rules/all')
     }
   },
 
@@ -135,7 +135,7 @@ export default Vue.extend({
 
       if (res) {
         this.$store.commit('addNotice', 'Atualizado com sucesso')
-        this.$router.push('/technical-list/material-rules/all')
+        this.$router.push('/technical-list/product-rules/all')
       } else {
         this.$store.commit('addError', rule.get('error'))
       }
