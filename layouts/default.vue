@@ -156,6 +156,11 @@ const menu = {
           icon: 'mdi-alpha-p-box',
           title: 'technicalList.productRules.title',
           to: '/technical-list/product-rules/all'
+        },
+        {
+          icon: 'mdi-alpha-o-box',
+          title: 'technicalList.orderRules.title',
+          to: '/technical-list/order-rules/all'
         }
       ]
     }

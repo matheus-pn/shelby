@@ -1,5 +1,6 @@
 import materialRules from '@/i18n/en-US/material_rules'
 import productRules from '@/i18n/en-US/product_rules'
+import orderRules from '@/i18n/en-US/order_rules'
 
 export default {
   name: 'Name',
@@ -22,6 +23,7 @@ export default {
     createdAt: 'Created At',
     actions: 'Actions',
     materialRules,
-    productRules
+    productRules,
+    orderRules
   }
 }
