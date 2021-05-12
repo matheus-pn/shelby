@@ -3,6 +3,8 @@ import productRules from '@/i18n/pt-BR/product_rules'
 import orderRules from '@/i18n/pt-BR/order_rules'
 
 export default {
+  '-': '-',
+  quantity: 'Quantidade',
   name: 'Nome',
   only: 'Somente',
   except: 'Exceto',
