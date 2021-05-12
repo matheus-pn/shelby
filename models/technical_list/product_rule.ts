@@ -105,6 +105,7 @@ export class ProductRule extends BaseModel {
         break
     }
 
-    return res.map(t => t.translate ? vm.$t(t.text) : t.text).join(' ')
+    const s = res.map(t => t.translate ? vm.$t(t.text) : t.text).join(' ')
+    return s.length > 100 ? s.slice(0, 100) + '...' : s
   }
 }
