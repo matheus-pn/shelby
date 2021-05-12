@@ -74,6 +74,20 @@
               outlined
               clearable
             />
+            <span
+              v-for="id in form.consumableVmodel"
+              :key="id"
+            >
+              <v-slider
+                :label="`${form.consumableFind(id).name}, ${$t('quantity')}:`"
+                thumb-label="always"
+                thumb-color="secondary"
+                :value="form.consumableQuantityMap.get(id)"
+                min="1"
+                max="10"
+                @input="form.quantityCallback(id, $event)"
+              />
+            </span>
           </v-col>
         </v-row>
         <v-row>
@@ -94,7 +108,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { ProductRuleForm, flagOptions, FormModes } from '@/services/technical-list/product_rule_form'
+import { ProductRuleForm, flagOptions } from '@/services/technical-list/product_rule_form'
 import RuleFilter from '@/components/RuleFilter.vue'
 
 export default Vue.extend({
@@ -127,7 +141,7 @@ export default Vue.extend({
       if (!confirm('Are you sure?')) { return }
       const rule = this.form.toRule()
       let res
-      if (this.form.mode === FormModes.NEW) {
+      if (this.form.isNewForm()) {
         res = await rule.create()
       } else {
         res = await rule.edit()
