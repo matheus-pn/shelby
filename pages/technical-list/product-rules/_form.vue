@@ -67,7 +67,7 @@
             <v-autocomplete
               v-model="form.consumableVmodel"
               :loading="form.consumableLoading"
-              :items="Array.from(form.consumableOptions)"
+              :items="form.consumableOptions"
               item-text="name"
               item-value="id"
               multiple
