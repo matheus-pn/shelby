@@ -70,7 +70,6 @@ export class MaterialRuleForm {
     this.id = Number(id)
 
     const res = await $axios.get(`/api/v1/shelby/material_rules/${id}`)
-
     // Set filter flags
     this.companyInclusionVmodel = res.data.company_inclusion
     this.materialInclusionVmodel = res.data.material_inclusion
@@ -145,8 +144,8 @@ export class MaterialRuleForm {
       ),
       categories: selectedCollection(
         this.categoryOptions,
-        this.companyVmodel,
-        this.companyInclusionVmodel
+        this.categoryVmodel,
+        this.categoryInclusionVmodel
       ),
       // null => false, bool => bool
       company_inclusion: !!this.companyInclusionVmodel,
